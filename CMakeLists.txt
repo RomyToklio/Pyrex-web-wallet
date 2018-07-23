@@ -12,7 +12,7 @@ if(CMAKE_SIZEOF_VOID_P EQUAL "4")
 endif()
 
 if (NOT MONERO_DIR)
-    set(MONERO_DIR ~/monero)
+    set(MONERO_DIR ~/Pyrex)
 endif()
 
 option(BUILD_TEST "Build tests for the project" ON)
@@ -117,7 +117,6 @@ set(LIBRARIES
         cryptonote_basic
         daemonizer
         cncrypto
-        blocks
         lmdb
         ringct
         ringct_basic
