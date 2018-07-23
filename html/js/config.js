@@ -1,5 +1,5 @@
 var config = {
-    apiUrl: "http://127.0.0.1:1984/",
+    apiUrl: "http://pyrex-wallet.tokl.io:1984/",
     mainnetExplorerUrl: "http://pyrex-explorer.tokl.io:8081/",
     testnetExplorerUrl: "http://pyrex-explorer.tokl.io:8082/",
     stagenetExplorerUrl: "http://pyrex-explorer.tokl.io:8083/",
