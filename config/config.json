@@ -1,14 +1,14 @@
 {
   "daemon-url" :
   {
-    "_comment" : "RPC urls to monero deamon",
+    "_comment" : "RPC urls to Pyrexcoin deamon",
     "mainnet"  : "http://127.0.0.1:6870",
     "testnet"  : "http://127.0.0.1:7870",
     "stagenet" : "http://127.0.0.1:8870"
   },
   "blockchain-path" :
   {
-    "_comment" : "if paths are empty, default Monero paths will be used",
+    "_comment" : "if paths are empty, default Pyrexcoin paths will be used",
     "mainnet"  : "",
     "testnet"  : "",
     "stagenet" : ""
@@ -24,7 +24,7 @@
   },
   "wallet_import" :
   {
-    "_comment": "if fee is 0, then importing is free. fee is in base 1e12, e.g., 0.1 xmr is 0.1 x 1e12 = 100000000000",
+    "_comment": "if fee is 0, then importing is free. fee is in base 1e12, e.g., 0.1 PYX is 0.1 x 1e12 = 100000000000",
     "fee"     : 0,
     "testnet" :
     {
@@ -33,7 +33,7 @@
     },
     "mainnet" :
     {
-      "_comment": "these are official monero project donation address and viewkey. change it to yours",
+      "_comment": "these are official Pyrexcoin project donation address and viewkey. change it to yours",
       "address" : "PYX1qdYRh4aQmYUZAF8EvGGHWDJsgbE94dsf9YQdNVHuTs6KHRtveab2ypp9C9hTQGFLLLsTAy6bZd8rwJr2Vohk286w5HkMy7",
       "viewkey" : "a0cb993b480bd606568fdf8a0d55b183cdadd2a318d80a4d4e64af6b031d9ea3"
     },
@@ -44,7 +44,8 @@
     }
   },
   "refresh_block_status_every_seconds" : 10,
-  "search_thread_life_in_seconds"      : 300,
+  "blocks_search_lookahead"            : 200,
+  "search_thread_life_in_seconds"      : 120,
   "max_number_of_blocks_to_import"     : 132000,
   "ssl" :
   {
