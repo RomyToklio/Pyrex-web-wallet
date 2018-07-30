@@ -802,7 +802,7 @@ YourMoneroRequests::get_random_outs(const shared_ptr< Session > session, const B
     else
     {
         j_response["status"] = "error";
-        j_response["error"]  = fmt::format("Error getting random outputs from monero deamon");
+        j_response["error"]  = fmt::format("Error getting random outputs from Pyrexcoin deamon");
     }
 
     string response_body = j_response.dump();
