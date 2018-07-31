@@ -16,7 +16,7 @@ namespace xmreg
         positional_options_description p;
 
         options_description desc(
-                "openmonero, Open Monero backend service");
+                "openmonero, Open Pyrexcoin backend service");
 
         desc.add_options()
                 ("help,h", value<bool>()->default_value(false)->implicit_value(true),
@@ -28,7 +28,7 @@ namespace xmreg
                 ("do-not-relay", value<bool>()->default_value(false)->implicit_value(true),
                  "does not relay txs to other nodes. useful when testing construction and submiting txs")
                 ("port,p", value<string>()->default_value("1984"),
-                 "default port for restbed service of Open Monero")
+                 "default port for restbed service of Open Pyrexcoin")
                 ("config-file,c", value<string>()->default_value("./config/config.json"),
                  "Config file path.");
 
