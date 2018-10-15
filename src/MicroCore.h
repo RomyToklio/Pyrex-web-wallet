@@ -17,17 +17,6 @@ using namespace cryptonote;
 using namespace crypto;
 using namespace std;
 
-
-class MicroBlockchainLMDB : public BlockchainLMDB
-{
-public:
-
-    using BlockchainLMDB::BlockchainLMDB;
-
-    virtual void sync() override;
-};
-
-
 /**
  * Micro version of cryptonode::core class
  * Micro version of constructor,
@@ -40,8 +29,8 @@ class MicroCore {
 
     string blockchain_path;
 
-    Blockchain core_storage;
     tx_memory_pool m_mempool;
+    Blockchain core_storage;
 
     hw::device* m_device;
 
@@ -50,6 +39,12 @@ class MicroCore {
     bool initialization_succeded {false};
 
 public:
+
+    //   <amoumt,
+    //    tuple<total_instances, unlocked_instances, recent_instances>
+    using histogram_map = std::map<uint64_t,
+                               std::tuple<uint64_t,  uint64_t, uint64_t>>;
+
     MicroCore();
 
     /**
@@ -121,10 +116,10 @@ public:
         return core_storage.get_db().get_output_tx_and_index(amount, index);
     }
 
-    template<typename... T>
-    auto get_tx_block_height(T&&... args) const
+    virtual uint64_t
+    get_tx_block_height(crypto::hash const& tx_hash) const
     {
-        return core_storage.get_db().get_tx_block_height(std::forward<T>(args)...);
+        return core_storage.get_db().get_tx_block_height(tx_hash);
     }
 
     virtual std::vector<uint64_t>
@@ -133,10 +128,13 @@ public:
         return core_storage.get_db().get_tx_amount_output_indices(tx_id);
     }
 
-    template<typename... T>
-    auto get_mempool_txs(T&&... args) const
+    virtual bool
+    get_mempool_txs(
+            std::vector<tx_info>& tx_infos,
+            std::vector<spent_key_image_info>& key_image_infos) const
     {
-        return m_mempool.get_transactions_and_spent_keys_info(std::forward<T>(args)...);
+        return m_mempool.get_transactions_and_spent_keys_info(
+                    tx_infos, key_image_infos);
     }
 
     virtual uint64_t
@@ -145,16 +143,25 @@ public:
         return core_storage.get_current_blockchain_height();
     }
 
-    virtual bool
-    get_random_outs_for_amounts(
-            COMMAND_RPC_GET_RANDOM_OUTPUTS_FOR_AMOUNTS::request const& req,
-            COMMAND_RPC_GET_RANDOM_OUTPUTS_FOR_AMOUNTS::response& res) const
-    {
-        return core_storage.get_random_outs_for_amounts(req, res);
-    }
 
     virtual bool
-    get_outs(const COMMAND_RPC_GET_OUTPUTS_BIN::request& req,
+    get_output_histogram(
+            vector<uint64_t> const& amounts,
+            uint64_t min_count,
+            histogram_map& histogram,
+            bool unlocked = true,
+            uint64_t recent_cutoff = 0) const;
+
+
+    // mimicks core_rpc_server::on_get_output_histogram(..)
+    virtual bool
+    get_output_histogram(
+            COMMAND_RPC_GET_OUTPUT_HISTOGRAM::request const& req,
+            COMMAND_RPC_GET_OUTPUT_HISTOGRAM::response& res) const;
+
+
+    virtual bool
+    get_outs(COMMAND_RPC_GET_OUTPUTS_BIN::request const& req,
              COMMAND_RPC_GET_OUTPUTS_BIN::response& res) const
     {
         return core_storage.get_outs(req, res);
@@ -163,14 +170,28 @@ public:
     virtual uint64_t
     get_dynamic_per_kb_fee_estimate(uint64_t const& grace_blocks) const
     {
-        return core_storage.get_dynamic_per_kb_fee_estimate(grace_blocks);
+        return core_storage.get_dynamic_base_fee_estimate(grace_blocks);
     }
+
+    bool
+    get_block_complete_entry(block const& b, block_complete_entry& bce);
 
     virtual bool
     get_block_from_height(uint64_t height, block& blk) const;
 
     virtual bool
     get_tx(crypto::hash const& tx_hash, transaction& tx) const;
+
+    virtual bool
+    decrypt_payment_id(crypto::hash8 &payment_id,
+                       public_key const& public_key,
+                       secret_key const& secret_key)
+    {
+        return m_device->decrypt_payment_id(payment_id,
+                                            public_key,
+                                            secret_key);
+    }
+
 
     virtual bool
     init_success() const;    

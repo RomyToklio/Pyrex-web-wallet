@@ -1,9 +1,4 @@
-//
-// Created by mwo on 14/12/16.
-//
-
-#ifndef RESTBED_XMR_CURRENTBLOCKCHAINSTATUS_H
-#define RESTBED_XMR_CURRENTBLOCKCHAINSTATUS_H
+#pragma once
 
 #define MYSQLPP_SSQLS_NO_STATICS 1
 
@@ -14,8 +9,10 @@
 #include "BlockchainSetup.h"
 #include "TxSearch.h"
 #include "tools.h"
+#include "ThreadRAII.h"
 #include "RPCCalls.h"
 #include "MySqlAccounts.h"
+#include "RandomOutputs.h"
 
 #include <iostream>
 #include <memory>
@@ -40,28 +37,33 @@ class MySqlAccounts;
 *
 * This way its much easier to mock it for unit testing.
 */
-class CurrentBlockchainStatus : public std::enable_shared_from_this<CurrentBlockchainStatus>
+class CurrentBlockchainStatus
+        : public std::enable_shared_from_this<CurrentBlockchainStatus>
 {
 public:
+
+
     // vector of mempool transactions that all threads
     // can refer to
     //                               recieved_time, tx
     using mempool_txs_t = vector<pair<uint64_t, transaction>>;
 
 
-    //                            tx_hash      , tx,          height , timestamp, is_coinbase
-    using txs_tuple_t = std::tuple<crypto::hash, transaction, uint64_t, uint64_t, bool>;
+    //              height , timestamp, is_coinbase
+    using txs_tuple_t
+        = std::tuple<uint64_t, uint64_t, bool>;
 
     atomic<uint64_t> current_height;
 
     atomic<bool> is_running;
+    atomic<bool> stop_blockchain_monitor_loop;
 
     CurrentBlockchainStatus(BlockchainSetup _bc_setup,
                             std::unique_ptr<MicroCore> _mcore,
                             std::unique_ptr<RPCCalls> _rpc);
 
     virtual void
-    start_monitor_blockchain_thread();
+    monitor_blockchain();
 
     virtual uint64_t
     get_current_blockchain_height();
@@ -134,10 +136,10 @@ public:
                                 vector<uint64_t>& out_indices);
 
     virtual bool
-    get_random_outputs(const vector<uint64_t>& amounts,
-                       const uint64_t& outs_count,
-                       vector<COMMAND_RPC_GET_RANDOM_OUTPUTS_FOR_AMOUNTS
-                        ::outs_for_amount>& found_outputs);
+    get_random_outputs(vector<uint64_t> const& amounts,
+                       uint64_t outs_count,
+                       RandomOutputs::outs_for_amount_v&
+                       found_outputs);
 
     virtual uint64_t
     get_dynamic_per_kb_fee_estimate() const;
@@ -169,7 +171,8 @@ public:
     // definitions of these function are at the end of this file
     // due to forward declaraions of TxSearch
     virtual bool
-    start_tx_search_thread(XmrAccount acc);
+    start_tx_search_thread(XmrAccount acc,
+                           std::unique_ptr<TxSearch> tx_search);
 
     virtual bool
     ping_search_thread(const string& address);
@@ -235,9 +238,25 @@ public:
         return bc_setup;
     }
 
+    inline virtual void
+    set_bc_setup(BlockchainSetup const& bs)
+    {
+        bc_setup = bs;
+    }
+
+    virtual void
+    init_txs_data_vector(vector<block> const& blocks,
+                         vector<crypto::hash>& txs_to_get,
+                         vector<txs_tuple_t>& txs_data);
+
     virtual bool
     get_txs_in_blocks(vector<block> const& blocks,
+                      vector<crypto::hash>& txs_hashes,
+                      vector<transaction>& txs,
                       vector<txs_tuple_t>& txs_data);
+
+    virtual TxSearch&
+    get_search_thread(string const& acc_address);
 
     // default destructor is fine
     virtual ~CurrentBlockchainStatus() = default;
@@ -275,7 +294,7 @@ protected:
     // map that will keep track of search threads. In the
     // map, key is address to which a running thread belongs to.
     // make it static to guarantee only one such map exist.
-    map<string, unique_ptr<TxSearch>> searching_threads;
+    map<string, ThreadRAII2<TxSearch>> searching_threads;
 
     // thread that will be dispachaed and will keep monitoring blockchain
     // and mempool changes
@@ -286,8 +305,15 @@ protected:
 
     // to synchronize access to mempool_txs vector
     mutex getting_mempool_txs;
+
+    // have this method will make it easier to moc
+    // RandomOutputs in our tests later
+    virtual unique_ptr<RandomOutputs>
+    create_random_outputs_object(
+            vector<uint64_t> const& amounts,
+            uint64_t outs_count) const;
+
 };
 
 
 }
-#endif //RESTBED_XMR_CURRENTBLOCKCHAINSTATUS_H
