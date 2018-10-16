@@ -16,6 +16,7 @@ var config = {
     subAddressPrefix: 0x146806,
     addressPrefixTestnet: 53,
     integratedAddressPrefixTestnet: 54,
+
     subAddressPrefixTestnet: 63,
     addressPrefixStagenet: 24,
     integratedAddressPrefixStagenet: 25,
