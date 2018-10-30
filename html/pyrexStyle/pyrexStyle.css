@@ -1,0 +1,29 @@
+.nav{
+	    background-color: transparent!important;
+}
+
+.body-section.steps-page {
+    background-color: transparent!important;
+}
+
+.home-header {
+    color: #000!important;
+}
+
+.nav-link {
+    color: #000!important;
+}
+.logoBottom{
+	color:#000;font-family: 'Roboto', sans-serif;font-size: 13px;opacity: 0.2;
+}
+
+
+
+.body-section.steps-page {
+    padding-bottom: 0;
+}
+
+.coloured {
+	background-color:transparent!important;
+	padding-bottom:0!important;
+}

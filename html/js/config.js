@@ -1,8 +1,8 @@
 var config = {
-    apiUrl: "http://pyrex-wallet.tokl.io:1984/",
-    mainnetExplorerUrl: "http://pyrex-explorer.tokl.io:8081/",
-    testnetExplorerUrl: "http://pyrex-explorer.tokl.io:8082/",
-    stagenetExplorerUrl: "http://pyrex-explorer.tokl.io:8083/",
+    apiUrl: "https://wallet-api.pyrexcoin.com/",
+    mainnetExplorerUrl: "https://explorer.pyrexcoin.com/",
+    testnetExplorerUrl: "https://explorer.pyrexcoin.com/",
+    stagenetExplorerUrl: "https://explorer.pyrexcoin.com/",
     nettype: 0, /* 0 - MAINNET, 1 - TESTNET, 2 - STAGENET */
     coinUnitPlaces: 12,
     txMinConfirms: 10,         // corresponds to CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE in Pyrexcoin

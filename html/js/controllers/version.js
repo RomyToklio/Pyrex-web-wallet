@@ -16,7 +16,7 @@ thinwalletCtrls.controller('VersionCtrl', function ($scope, $http, ApiCalls) {
             var api_major = response.data.api >> 16;
             var api_minor = response.data.api & 0xffff;
 
-            $scope.version = "Open Pyrexcoin version (api): "
+            $scope.version = "Pyrexcoin Web Wallet version (api): "
                 + git_branch_name + "-" + last_git_commit_date + "-" + last_git_commit_hash
                 + " (" + api_major + "." + api_minor + ")"
                 + "  | Pyrexcoin version: " + monero_version_full
