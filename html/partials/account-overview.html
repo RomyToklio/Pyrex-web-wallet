@@ -4,16 +4,18 @@
   <div class="w-container">
       <div class="w-row">
         <div class="w-col w-col-6">
-          <h1>Account Overview</h1>
-          <div class="subhead-text inner overview-page">
-            Your account overview and recent transactions.
-            <span ng-show="view_only"><br/>This is <b>view only</b> wallet.
-              Balance and transactions do not account for any spendings.
-              Thus, if there were any outgoing transactions made,
-              the balance here will be incorrect, and those transactions
-              not shown.
-            </span>
-          </div>
+			<div class="header-div-block">
+				<h1 class="heading-contained">Account Overview</h1>
+				<div class="subhead-text inner overview-page">
+				Your account overview and recent transactions.
+				<span ng-show="view_only"><br/>This is <b>view only</b> wallet.
+				  Balance and transactions do not account for any spendings.
+				  Thus, if there were any outgoing transactions made,
+				  the balance here will be incorrect, and those transactions
+				  not shown.
+				</span>
+				</div>
+			</div>
         </div>
         <div class="w-col w-col-6">
           <ng-include src="'partials/account-balance.html'"></ng-include>
@@ -36,10 +38,10 @@
             <div class="w-col w-col-2 responsive-column">
               <div class="transaction-head">Value (PYX)</div>
             </div>
-            <div class="w-col w-col-3 responsive-column">
+            <div class="w-col w-col-2 responsive-column">
               <div class="transaction-head">Date Received</div>
             </div>
-            <div class="w-col w-col-1 responsive-column">
+            <div class="w-col w-col-2 responsive-column">
               <div class="transaction-head">Ring Size</div>
             </div>
             <div class="w-col w-col-6 responsive-column">

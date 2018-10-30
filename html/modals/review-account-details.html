@@ -10,7 +10,7 @@
                 <form id="email-form" name="email-form" data-name="Email Form">
                     <label class="field-label review">Mnemonic seed (Private)</label>
                     <div class="move-text-div">
-                        <div class="review-text address" ng-show="mnemonic">{{mnemonic}}</div>
+                        <div class="review-text address" style="color: #D79681;" ng-show="mnemonic">{{mnemonic}}</div>
                         <div class="review-text" ng-show="!mnemonic">N/A</div>
                     </div>
                     <label class="field-label review" >Account Address (Public)</label>
@@ -27,7 +27,7 @@
                         <div class="review-text" ng-show="view_only">N/A for view only account</div>
                     </div>
                     <div class="submit-div">
-                        <a class="login-btn modals pointer" data-ix="close-review-details" hide-modal>Ok, thanks!</a>
+                        <a class="button" style=" display: inline-block; " data-ix="close-review-details" hide-modal>Ok, thanks!</a>
                     </div>
                 </form>
             </div>

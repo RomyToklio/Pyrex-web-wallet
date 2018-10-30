@@ -1,6 +1,6 @@
 <div class="modal-background" modal-name="imported-account" ng-controller="ImportAccountCtrl">
   <div class="w-container">
-    <div class="w-clearfix">
+    <div class="w-clearfix" style=" background:#1B1C23;">
       <a class="w-inline-block close-modal" hide-modal="">
         <div class="close-overlay pointer">+</div>
       </a>
@@ -11,7 +11,7 @@
           This is very resource intensive task.
           Thus a small fee might be required (depends on the backend settings).</div>
         <div class="submit-div small-top-margin">
-          <a class="login-btn modals pointer" ng-click="importAll()">Import all transactions</a>
+          <a class="button" style=" display: inline-block; margin: 20px; " ng-click="importAll()">Import all transactions</a>
         </div>
 
         <div class="w-form form-wrapper">
@@ -26,14 +26,14 @@
         </div>
 
         <div class="submit-div small-top-margin">
-          <a class="login-btn modals pointer" ng-click="importLast()">Import recent transactions</a>
+          <a class="button" style=" display: inline-block; margin: 20px; " ng-click="importLast()">Import recent transactions</a>
         </div>
 
 
         <label class="field-label">Don't import transactions</label>
         <div class="review-text">You can send and receive coins from your account, but you won't be able to see or spend any transactions you have received before now</div>
         <div class="submit-div small-top-margin">
-          <a class="login-btn modals pointer" hide-modal="">Don't import transactions</a>
+          <a class="button" style=" display: inline-block; margin: 20px; " hide-modal="">Don't import transactions</a>
         </div>
         <div class="w-form-fail error-backing" style="display: block;" ng-show="!!error">
             <p>{{error}}</p>

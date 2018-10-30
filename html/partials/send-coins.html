@@ -68,7 +68,7 @@
                         <option value="3">High (if you are in hurry and if there is some backlog of txs)</option>
                         <option value="4">Paranoid (absolute priority, but the most expensive obviously)</option>
                     </select>
-                    <input class="w-button send-btn" id="form-submit" type="submit" value="Send Payment"
+                    <input class="button" style=" margin: 40px auto 10px auto; " id="form-submit" type="submit" value="Send Payment"
                            data-wait="Please wait..." ng-disabled="submitting">
                 </form>
                 <div class="w-form-done" style="display: block;" ng-show="!!status">
@@ -108,7 +108,7 @@
                     <div class="move-text-div">
                         <a class="login-link" href="{{ sent_tx.explorerLink }} " target="_blank">{{ sent_tx.explorerLink }}</a>
                     </div>
-                    <input class="w-button send-btn" type="submit" value="Send Another Payment" data-wait="Please wait...">
+                    <input class="button" style=" margin: 40px auto 10px auto; " type="submit" value="Send Another Payment" data-wait="Please wait...">
                 </form>
             </div>
         </div>
