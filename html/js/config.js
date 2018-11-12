@@ -14,13 +14,12 @@ var config = {
     addressPrefix: 0xe2386,
     integratedAddressPrefix: 0xe6606,
     subAddressPrefix: 0x146806,
-    addressPrefixTestnet: 53,
-    integratedAddressPrefixTestnet: 54,
-
-    subAddressPrefixTestnet: 63,
-    addressPrefixStagenet: 24,
-    integratedAddressPrefixStagenet: 25,
-    subAddressPrefixStagenet: 36,
+    addressPrefixTestnet: 0x27e386,
+    integratedAddressPrefixTestnet: 0x62886,
+    subAddressPrefixTestnet: 0xaa886,
+    addressPrefixStagenet: 0x276386,
+    integratedAddressPrefixStagenet: 0x296806,
+    subAddressPrefixStagenet: 0x2de806,
     feePerKB: new JSBigInt('2000000000'),//20^10 - not used anymore, as fee is dynamic.
     dustThreshold: new JSBigInt('1000000000'),//10^10 used for choosing outputs/change - we decompose all the way down if the receiver wants now regardless of threshold
     txChargeRatio: 0.5,
