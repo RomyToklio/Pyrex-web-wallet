@@ -8,7 +8,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-
+#include "JsonTx.h"
 
 namespace
 {
@@ -68,6 +68,11 @@ public:
     MOCK_CONST_METHOD2(get_output_tx_and_index,
                        tx_out_index(uint64_t const& amount,
                                     uint64_t const& index));
+
+    MOCK_CONST_METHOD3(get_output_tx_and_index,
+                       void(const uint64_t& amount,
+                            const std::vector<uint64_t> &offsets,
+                            std::vector<tx_out_index> &indices));
 
     MOCK_CONST_METHOD2(get_tx,
                        bool(crypto::hash const& tx_hash,
@@ -209,7 +214,7 @@ struct MockGettingOutputs
     // based on absolute_offsets
     virtual bool
     get_output_keys(
-            const uint64_t& amount,
+            uint64_t amount,
             vector<uint64_t> absolute_offsets,
             vector<cryptonote::output_data_t>& outputs)
     {
@@ -231,7 +236,7 @@ struct MockGettingOutputs
     */
     virtual void
     get_output_key(
-            const uint64_t& amount,
+            uint64_t amount,
             vector<uint64_t> absolute_offsets,
             vector<cryptonote::output_data_t>& outputs)
     {
@@ -239,14 +244,5 @@ struct MockGettingOutputs
     }
 
 };
-
-bool
-check_and_adjust_path(string& in_path)
-{
-    if (!boost::filesystem::exists(in_path))
-        in_path = "./tests/" + in_path;
-
-    return boost::filesystem::exists(in_path);
-}
 
 }

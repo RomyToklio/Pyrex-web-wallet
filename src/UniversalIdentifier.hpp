@@ -71,8 +71,6 @@ public:
         return identified_outputs;
     }
 
-protected:
-
     struct info
     {
         public_key pub_key;
@@ -82,7 +80,11 @@ protected:
         rct::key   rtc_outpk;
         rct::key   rtc_mask;
         rct::key   rtc_amount;
+
+        friend std::ostream& operator<<(std::ostream& os, info const& _info);
     };
+
+protected:
 
     uint64_t total_received {0};
     vector<info> identified_outputs;
@@ -95,12 +97,12 @@ protected:
 class Input : public BaseIdentifier
 {
 public:
-
-    using key_imgs_map_t = unordered_map<public_key, uint64_t>;
+                                        //output_pubk   , amount
+    using known_outputs_t = unordered_map<public_key, uint64_t>;
 
     Input(address_parse_info const* _a,
            secret_key const* _viewkey,
-           key_imgs_map_t const* _known_outputs,
+           known_outputs_t const* _known_outputs,
            MicroCore* _mcore)
         : BaseIdentifier(_a, _viewkey),          
           known_outputs {_known_outputs},
@@ -117,17 +119,21 @@ public:
         return identified_inputs;
     }
 
-protected:
 
     struct info
     {
         key_image key_img;
         uint64_t amount;
         public_key out_pub_key;
+
+        friend std::ostream& operator<<(std::ostream& os, info const& _info);
     };
 
+
+protected:
+
     secret_key const* viewkey {nullptr};   
-    key_imgs_map_t const* known_outputs {nullptr};    
+    known_outputs_t const* known_outputs {nullptr};
     MicroCore* mcore {nullptr};
     vector<info> identified_inputs;
 };
@@ -219,7 +225,7 @@ public:
                       p_id, tx_pub_key, *get_viewkey());
     }
 
-    inline auto get_id() const {return payment_id;}
+    inline auto get() const {return payment_id;}
 
 private:
     HashT payment_id {};
@@ -260,10 +266,19 @@ public:
          (void) b;
     }
 
+     // overload to get value from tuple by type
     template <typename U>
-    U* const get()
+    auto* const get()
     {
         return std::get<unique_ptr<U>>(identifiers).get();
+    }
+
+
+    // overload to get value from tuple by number
+    template <size_t No>
+    auto* const get()
+    {
+        return std::get<No>(identifiers).get();
     }
 
     inline auto get_tx_pub_key() const {return tx_pub_key;}
@@ -296,4 +311,22 @@ calc_total_xmr(T&& infos)
     return total_xmr;
 }
 
+
+inline std::ostream&
+operator<<(std::ostream& os, xmreg::Output::info const& _info)
+{
+    return os << _info.idx_in_tx << ", "
+              << pod_to_hex(_info.pub_key) << ", "
+              << _info.amount;
 }
+
+inline std::ostream&
+operator<<(std::ostream& os, xmreg::Input::info const& _info)
+{
+    return os << pod_to_hex(_info.key_img) << ", "
+              << pod_to_hex(_info.out_pub_key) << ", "
+              << _info.amount;
+}
+
+}
+
