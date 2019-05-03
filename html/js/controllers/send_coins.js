@@ -48,7 +48,9 @@ class HostedMoneroAPIClient
         ).catch(
             function(data)
             {
-                fn(data && data.data.Error ? data.data.Error : "Something went wrong with getting your available balance for spending");
+                fn(data && data.data.Error 
+                    ? data.data.Error 
+                    : "Something went wrong with getting your available balance for spending");
             }
         );
         const requestHandle = 
@@ -72,7 +74,10 @@ class HostedMoneroAPIClient
         ).catch(
             function(data)
             {
-                fn(data && data.data.Error ? data.data.Error : "Something went wrong while getting decoy outputs");
+                fn(data
+                    && data.data.Error 
+                    ? data.data.Error 
+                    : "Something went wrong while getting decoy outputs");
             }
         );
         const requestHandle = 
@@ -96,7 +101,10 @@ class HostedMoneroAPIClient
         ).catch(
             function(data)
             {
-                fn(data && data.data.Error ? data.data.Error : "Something went wrong while submitting your transaction");
+                //console.log("submit_raw_data_error:", data);
+                fn(data && data.data.Error 
+                    ? data.data.Error 
+                    : "Something went wrong while submitting your transaction");
             }
         );
         const requestHandle = 
@@ -301,7 +309,7 @@ thinwalletCtrls.controller('SendCoinsCtrl', function($scope, $http, $q, AccountS
             function sendTo(target_address, amount, domain/*may be null*/)
             {
                 const mixin = 10; // mandatory fixed mixin for v8 Monero fork
-                let statusUpdate_messageBase = sweeping ? `Sending wallet balance…` : `Sending ${amount} XMR…`
+                let statusUpdate_messageBase = sweeping ? `Sending wallet balance…` : `Sending ${amount} PYX…`
                 function _configureWith_statusUpdate(str, code)
                 {
                     console.log("Step:", str)

@@ -60,9 +60,18 @@ if (*help_opt)
 auto monero_log_level  =
         *(opts.get_option<size_t>("monero-log-level"));
 
+auto verbose_level = 
+        *(opts.get_option<size_t>("verbose"));
+
 if (monero_log_level < 1 || monero_log_level > 4)
 {
     cerr << "monero-log-level,m option must be between 1 and 4!\n";
+    return EXIT_SUCCESS;
+}
+
+if (verbose_level < 0 || verbose_level > 4)
+{
+    cerr << "verbose,v option must be between 0 and 4!\n";
     return EXIT_SUCCESS;
 }
 
@@ -93,9 +102,14 @@ defaultConf.setGlobally(el::ConfigurationType::Format,
                         "%datetime [%levshort,%logger,%fbase:%func:%line]"
                         " %msg");
 
+el::Loggers::setVerboseLevel(verbose_level);
+
 el::Loggers::reconfigureLogger(OPENMONERO_LOG_CATEGORY, defaultConf);
 
 OMINFO << "OpenMonero is starting";
+
+if (verbose_level > 0)
+    OMINFO << "Using verbose log level to: " << verbose_level;
 
 auto do_not_relay_opt = opts.get_option<bool>("do-not-relay");
 auto testnet_opt      = opts.get_option<bool>("testnet");
@@ -139,6 +153,22 @@ xmreg::MySqlConnector::username = config_json["database"]["user"];
 xmreg::MySqlConnector::password = config_json["database"]["password"];
 xmreg::MySqlConnector::dbname   = config_json["database"]["dbname"];
 
+// number of thread in blockchain access pool thread
+auto threads_no = std::max<uint32_t>(
+        std::thread::hardware_concurrency()/2, 2u) - 1;
+
+if (bc_setup.blockchain_treadpool_size > 0)
+    threads_no = bc_setup.blockchain_treadpool_size;
+
+if (threads_no > 100)
+{
+    threads_no = 100;
+    OMWARN << "Requested Thread Pool size " 
+        << threads_no << " is greater than 100!."
+            " Overwriting to 100!" ;
+}
+
+OMINFO << "Thread pool size: " << threads_no << " threads";
 
 // once we have all the parameters for the blockchain and our backend
 // we can create and instance of CurrentBlockchainStatus class.
@@ -150,7 +180,8 @@ auto current_bc_status
         = make_shared<xmreg::CurrentBlockchainStatus>(
             bc_setup,
             std::make_unique<xmreg::MicroCore>(),
-            std::make_unique<xmreg::RPCCalls>(bc_setup.deamon_url));
+            std::make_unique<xmreg::RPCCalls>(bc_setup.deamon_url),
+            std::make_unique<TP::ThreadPool>(threads_no));
 
 // since CurrentBlockchainStatus class monitors current status
 // of the blockchain (e.g., current height) .This is the only class
