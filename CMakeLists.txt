@@ -37,7 +37,11 @@ add_subdirectory(src/)
 # add ext/ subfolder
 add_subdirectory(ext/)
 
-add_executable(${PROJECT_NAME})
+set(SOURCE_FILES
+        main.cpp)
+
+add_executable(${PROJECT_NAME}
+        ${SOURCE_FILES})
 
 target_sources(${PROJECT_NAME}
     PRIVATE main.cpp)
