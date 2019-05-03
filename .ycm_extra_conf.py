@@ -45,7 +45,7 @@ flags = [
     '-I/home/mwo2/Pyrex/external/easylogging++',
     '-I/home/mwo2/Pyrex/src',
     '-I/home/mwo2/Pyrex-web-wallet/ext/restbed/source',
-    '-I/home/mwo2/Pyrex-web-wallet/src/xmregcore',
+    '-I/home/mwo2/Pyrex-web-wallet/src/pyxegcore',
     '-I/usr/include/mysql',
     '-I/usr/local/include',
     '-I/usr/local/include/mysql',

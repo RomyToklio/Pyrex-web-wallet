@@ -38,7 +38,7 @@ set(COVERAGE_LCOV_EXCLUDES
     '*/ext/*' '*boost/*' '*c++/*'
      '*/Pyrex/*' '*googletest/*' '*googlemock/*'
      '*restbed/*' '*/mysql++/*' '*tests/*'
-     '*src/xmregcore/*')
+     '*src/pyxegcore/*')
 
  SETUP_TARGET_FOR_COVERAGE_LCOV(
        NAME coverage
