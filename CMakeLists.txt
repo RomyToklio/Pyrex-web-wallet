@@ -34,7 +34,7 @@ set(MY_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake"
 
 list(APPEND CMAKE_MODULE_PATH "${MY_CMAKE_DIR}")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/src/xmregcore/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/src/pyxegcore/cmake")
 
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${MONERO_BUILD_DIR}"
         CACHE PATH "Add Pyrexcoin directory for library searching")
@@ -106,7 +106,7 @@ find_package(Boost COMPONENTS
 
 # add XMREGCORE submodule
 set(BUILD_XMREGCORE_TESTS OFF CACHE INTERNAL "")
-add_subdirectory(src/xmregcore)    
+add_subdirectory(src/pyxegcore)    
 
 
 # add src/ subfolder
@@ -123,7 +123,7 @@ add_executable(${PROJECT_NAME}
         ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME}
-        PRIVATE src/xmregcore)
+        PRIVATE src/pyxegcore)
 
 # include monero headers
 target_include_monero_directories(${PROJECT_NAME})    

@@ -45,7 +45,7 @@ flags = [
     '-I/home/mwo2/monero/external/easylogging++',
     '-I/home/mwo2/monero/src',
     '-I/home/mwo2/openmonero/ext/restbed/source',
-    '-I/home/mwo2/openmonero/src/xmregcore',
+    '-I/home/mwo2/openmonero/src/pyxegcore',
     '-I/usr/include/mysql',
     '-I/usr/local/include',
     '-I/usr/local/include/mysql',

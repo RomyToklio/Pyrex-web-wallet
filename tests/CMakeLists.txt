@@ -17,7 +17,7 @@ macro(add_om_test _TEST_NAME)
     target_include_monero_directories(${_TEST_NAME}_tests)
 
     target_include_directories(${_TEST_NAME}_tests
-     PRIVATE ../src/xmregcore)
+     PRIVATE ../src/pyxegcore)
 
     add_test(NAME ${_TEST_NAME}_tests COMMAND ${_TEST_NAME}_tests)
 
