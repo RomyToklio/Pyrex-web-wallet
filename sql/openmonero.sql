@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `Payments` (
   `tx_hash` varchar(64) NOT NULL DEFAULT '',
   `request_fulfilled` tinyint(1) NOT NULL DEFAULT '0',
   `import_fee` bigint(20) NOT NULL,
-  `payment_address` varchar(100) NOT NULL,
+  `payment_address` varchar(110) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
