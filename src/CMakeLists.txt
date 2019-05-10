@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(myxrm)
+project(mypyx)
 
 set(SOURCE_FILES
 		CmdLineOptions.cpp
@@ -23,12 +23,12 @@ set(SOURCE_FILES
 # make static library called libmyxrm
 # that we are going to link to
 # in the root CMakeLists.txt file
-add_library(myxrm
+add_library(mypyx
 		STATIC
 		${SOURCE_FILES})
 
-target_include_monero_directories(myxrm)
-target_include_directories(myxrm PRIVATE "pyxegcore")
+target_include_monero_directories(mypyx)
+target_include_directories(mypyx PRIVATE "pyxegcore")
 
     #target_include_directories(myxmr 
     #  PUBLIC 

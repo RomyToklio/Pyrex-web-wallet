@@ -129,8 +129,8 @@ target_include_directories(${PROJECT_NAME}
 target_include_monero_directories(${PROJECT_NAME})    
 
 set(LIBRARIES
-        myxrm
-        myxrmcore
+        mypyx
+        mypyxcore
         ${Monero_LIBRARIES}
         restbed
         mysqlpp
