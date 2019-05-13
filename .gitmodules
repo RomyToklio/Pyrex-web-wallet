@@ -1,3 +1,4 @@
 [submodule "src/pyxegcore"]
 	path = src/pyxegcore
 	url = https://github.com/pyrex-coin/pyxegcore.git
+	branch = master
