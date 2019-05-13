@@ -39,7 +39,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/src/pyxegcore/cmake")
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${MONERO_BUILD_DIR}"
         CACHE PATH "Add Pyrexcoin directory for library searching")
 
-#include(MyUtils)
+include(MyUtils)
 
 
 if (${BUILD_TESTS})
