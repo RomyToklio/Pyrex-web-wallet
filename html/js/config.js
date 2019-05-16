@@ -1,6 +1,6 @@
 var config = {
     apiUrl: "https://wallet-api.pyrexcoin.com/",
-    mainnetExplorerUrl: "https://explorer.pyrexcoin.com/",
+    mainnetExplorerUrl: "https://explorer.pyrexcoin.com/#/",
     testnetExplorerUrl: "https://explorer.pyrexcoin.com/",
     stagenetExplorerUrl: "https://explorer.pyrexcoin.com/",
     nettype: 0, /* 0 - MAINNET, 1 - TESTNET, 2 - STAGENET */
